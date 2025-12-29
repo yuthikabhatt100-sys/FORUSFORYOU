@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4ebe6;
+  color: #2c2c2c;
+}
+
+.container {
+  width: 90%;
+  max-width: 700px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+video, img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #b76e79;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  height: 140px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+.final {
+  font-size: 28px;
+  color: #a12727;
+  font-weight: bold;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="app">
+
+  <!-- VIDEO -->
+  <video id="video" controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <!-- TEXT -->
+  <p>
+    This is for you.<br><br>
+    Even though I am flawed.<br>
+    Even though I hurt you sometimes by miscommunication.<br>
+    Even though I make you feel misunderstood or sad at times.<br>
+    Even though we fight.<br><br>
+    I am aware of it.<br>
+    I am willing to change.<br>
+    I want to hold on to you and to us.<br><br>
+    I love you. Always.
+  </p>
+
+  <!-- CONTINUE -->
+  <button onclick="start()">Continue</button>
+
+</div>
+
+<!-- AUDIO (plays after Continue) -->
+<audio id="audio">
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("audio");
+
+const questions = [
+  "What exactly made things feel heavy between us?",
+  "Which moment stayed in your mind the longest?",
+  "What meaning did you give to my words that hurt you?",
+  "What do you think I expect from you?",
+  "Are these expectations real or assumed?",
+  "What scares you when things feel intense?",
+  "What pace feels safe for you right now?",
+  "What do you want this connection to feel like?",
+  "What might you be overthinking?",
+  "What is one thing you want me to understand?"
+];
+
+let index = 0;
+
+function start() {
+  audio.play(); // ✅ browser allows this (user click)
+
+  document.getElementById("app").innerHTML = `
+    <h2 id="q"></h2>
+    <textarea placeholder="Write your answer here..."></textarea>
+    <button onclick="next()">Next</button>
+  `;
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  document.getElementById("q").innerText = questions[index];
+}
+
+function next() {
+  index++;
+  if (index < questions.length) {
+    loadQuestion();
+    document.querySelector("textarea").value = "";
+  } else {
+    audio.pause();
+    document.getElementById("app").innerHTML = `
+      <img src="photo.jpeg">
+      <div class="final">I love you.</div>
+    `;
+  }
+}
+</script>
+
+</body>
+</html>
